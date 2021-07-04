@@ -23,11 +23,11 @@ def getURL(links):
       news_urls.append(news_url)
   return news_urls
 
-links = sendRequest(url)
-news_urls = getURL(links)
 
-all_nouns = []
-for url in news_urls[:10]:
+
+def fetchURL(news_urls):
+  for url in news_urls[:10]:
+    all_nouns = []
     print("Fetching {}".format(url))
     response = requests.get(url)
     html = response.text
@@ -36,5 +36,12 @@ for url in news_urls[:10]:
     words = soup.text.split()
     nouns = [word for word in words if word.isalpha() and word[0] in string.ascii_uppercase]
     all_nouns += nouns
+    return all_nouns
+
+
+
+links = sendRequest(url)
+news_urls = getURL(links)
+all_nouns = fetchURL(news_urls)
 
 print(Counter(all_nouns).most_common(100))
