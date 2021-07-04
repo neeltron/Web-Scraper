@@ -1,18 +1,20 @@
 import requests
 import string
-
 from collections import Counter
-
 from bs4 import BeautifulSoup
-
 
 url = "https://bbc.com/news"
 
+def sendRequest(url):
+  response = requests.get(url)
+  html = response.text
+  soup = BeautifulSoup(html, "html.parser")
+  links = soup.findAll("a")
+  return links
 
-response = requests.get(url)
-html = response.text
-soup = BeautifulSoup(html, "html.parser")
-links = soup.findAll("a")
+
+
+links = sendRequest(url)
 
 news_urls = []
 for link in links:
