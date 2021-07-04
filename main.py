@@ -14,15 +14,17 @@ def sendRequest(url):
 
 
 
-links = sendRequest(url)
-
-news_urls = []
-for link in links:
+def getURL(links):
+  news_urls = []
+  for link in links:
     href = link.get("href")
     if href.startswith("/news") and href[-1].isdigit():
-        news_url = "https://bbc.com" + href
-        news_urls.append(news_url)
+      news_url = "https://bbc.com" + href
+      news_urls.append(news_url)
+  return news_urls
 
+links = sendRequest(url)
+news_urls = getURL(links)
 
 all_nouns = []
 for url in news_urls[:10]:
